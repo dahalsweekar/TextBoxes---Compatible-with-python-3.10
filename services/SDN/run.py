@@ -105,6 +105,6 @@ for image_name in os.listdir(image_dir):
     t = t + 1
     # cr(image_path=image_path,image_name=image_name ,dt_results=dt_results)
     dt_results.clear()
-    plt.savefig(f'/home/sweekar/SDN_main/services/results/demo_result_{t}.jpg')
+    plt.savefig(f'/home/sweekar/SDN_main/services/results/demo_result_{image_name}')
 
     print('success')
