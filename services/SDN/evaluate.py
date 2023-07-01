@@ -36,8 +36,9 @@ def calculate_metrics(gt, dt, shift_rate):
                                                                               int(polygon2_x[0]) + set_range)):
                     if (int(polygon2_x[1]) - set_range <= int(polygon1_x[1]) and (int(polygon1_x[1]) <= int(
                             polygon2_x[1]) + set_range)):
-                        if (int(polygon2_y[0]) - set_range <= int(polygon1_y[0])) and (int(polygon1_y[0]) <= (
-                                int(polygon2_y[0]) + set_range)):
+                        if (int(polygon2_y[0]) - set_range <= int(polygon1_y[0]) and (int(polygon1_y[0]) <=
+                                                                                      int(polygon2_y[
+                                                                                              0]) + set_range)):
                             if (int(polygon2_y[1]) - set_range <= int(polygon1_y[1]) and (int(polygon1_y[1]) <= int(
                                     polygon2_y[1]) + set_range)):
 
@@ -106,7 +107,7 @@ for line in lines:
     images.append(line.strip())
 test_list.close()
 
-threshold = 0.80
+threshold = 0.8
 nImg = len(images)
 print(f'Total Images: {nImg}')
 cum_hit_recall = 0
