@@ -11,7 +11,7 @@ Script Detection Network (SDN) is a text detection model that is designed to det
 6. make py
 ```
 # Dataset 
-1. Download Dataset: 
+1. Download Dataset: https://www.dropbox.com/sh/dzfgt9ytefzis3h/AADSybiK6YWqrPMqEvZdd9PNa?dl=0
 2. Create train/test lists (train.txt / test.txt) in "./data/text/" with the following form:
 ```
  path_to_example1.jpg path_to_example1.xml
