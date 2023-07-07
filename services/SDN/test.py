@@ -13,7 +13,7 @@ plt.rcParams['image.interpolation'] = 'nearest'
 plt.rcParams['image.cmap'] = 'gray'
 
 # Make sure that caffe is on the python path:
-caffe_root = '/home/sweekar/SDN_main/caffe'  # this file is expected to be in {caffe_root}/examples
+caffe_root = './caffe'  # this file is expected to be in {caffe_root}/examples
 os.chdir(caffe_root)
 import sys
 
@@ -25,8 +25,8 @@ caffe.set_device(0)
 caffe.set_mode_gpu()
 
 
-model_def = '/home/sweekar/SDN_main/models/VGG/300x300/deploy.prototxt'
-model_weights = '/home/sweekar/SDN_main/models/VGG/300x300/VGG_300x300_iter_6200.caffemodel'
+model_def = './models/VGG/300x300/deploy.prototxt'
+model_weights = './models/VGG/300x300/VGG_300x300_iter_6200.caffemodel'
 
 
 scales = ((500, 500),)
@@ -38,12 +38,14 @@ net = caffe.Net(model_def,  # defines the structure of the model
 # input preprocessing: 'data' is the name of the input blob == net.inputs[0]
 print(net.blobs['data'].data.shape)
 
-test_list = open('/home/sweekar/SDN_main/evaluation/test_list_ha.txt')
-save_dir = '/home/sweekar/SDN_main/evaluation/dt/'
+counter = 0
+
+test_list = open('./evaluation/train_list.txt')
+save_dir = './evaluation/dt/'
 for line in test_list.readlines():
     line = line.strip()
     image_name = line
-    image_path = '/home/sweekar/SDN_main/dataset/test_dataset/' + line
+    image_path = './dataset/image_only/' + line
     save_detection_path = save_dir + 'vgg_' + line[0:len(line) - 4] + '.txt'
     image = caffe.io.load_image(image_path)
     image_height, image_width, channels = image.shape
@@ -102,8 +104,11 @@ for line in test_list.readlines():
             coords = (xmin, ymin), xmax - xmin + 1, ymax - ymin + 1
             face_color_opacity = 0.4
             currentAxis.add_patch(plt.Rectangle(*coords, fill=True, facecolor=(1, 0, 0, face_color_opacity)))
+    counter = counter + 1
+    percent = (counter/765)*100
+    print(f'Percent Completed: [{percent}] %')
 
     detection_result.close()
-    plt.savefig('/home/sweekar/SDN_main/dataset/test_plots/' + image_name)
+    plt.savefig('./dataset/test_plots/' + image_name)
 test_list.close()
 print('success')
