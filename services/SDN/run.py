@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib
-
+import time
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
@@ -14,7 +14,7 @@ plt.rcParams['image.interpolation'] = 'nearest'
 plt.rcParams['image.cmap'] = 'gray'
 
 # Make sure that caffe is on the python path:
-caffe_root = '/home/sweekar/SDN_main/caffe'  # this file is expected to be in {caffe_root}/services
+caffe_root = './caffe'  # this file is expected to be in {caffe_root}/services
 os.chdir(caffe_root)
 import sys
 
@@ -25,8 +25,8 @@ import caffe
 caffe.set_device(0)
 caffe.set_mode_gpu()
 
-model_def = '/home/sweekar/SDN_main/models/VGG/300x300/deploy.prototxt'
-model_weights = '/home/sweekar/SDN_main/models/VGG/300x300/VGG_300x300_iter_6200.caffemodel'
+model_def = './models/VGG/300x300/deploy.prototxt'
+model_weights = './models/VGG/300x300/VGG_300x300_iter_6200.caffemodel'
 
 scales = ((500, 500),)
 
@@ -35,7 +35,7 @@ net = caffe.Net(model_def,  # defines the structure of the model
                 caffe.TEST)  # use test mode (e.g., don't perform dropout)
 
 dt_results = []
-image_dir = '/home/sweekar/SDN_main/services/img'
+image_dir = './services/img'
 t = 0
 for image_name in os.listdir(image_dir):
     print(f'Processing image: {image_name}')
@@ -60,7 +60,9 @@ for image_name in os.listdir(image_dir):
         transformed_image = transformer.preprocess('data', image)
         net.blobs['data'].data[...] = transformed_image
         # Forward pass.
+        st = time.time()
         detections = net.forward()['detection_out']
+        et = time.time()
         # Parse the outputs.
         det_label = detections[0, 0, :, 1]
         det_conf = detections[0, 0, :, 2]
@@ -105,6 +107,7 @@ for image_name in os.listdir(image_dir):
     t = t + 1
     # cr(image_path=image_path,image_name=image_name ,dt_results=dt_results)
     dt_results.clear()
-    plt.savefig(f'/home/sweekar/SDN_main/services/results/demo_result_{image_name}')
-
+    plt.savefig(f'./services/results/demo_result_{image_name}')
+    elapsed = et-st
+    print(f'Execution time: {elapsed}')
     print('success')
