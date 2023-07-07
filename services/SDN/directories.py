@@ -8,9 +8,9 @@ class Dir:
 
     def dir(self):
         # The database file for training data. Created by data/text/create_data.sh
-        train_data = "/home/sweekar/SDN_main/data/lmdb/lmdb/text_train_lmdb"
+        train_data = "./data/lmdb/lmdb/text_train_lmdb"
         # The database file for testing data. Created by data/text_10x/create_data.sh
-        test_data = "/home/sweekar/SDN_main/data/lmdb/lmdb/text_test_lmdb"
+        test_data = "./data/lmdb/lmdb/text_test_lmdb"
 
         # Modify the task name if you want.
         task_name = "{}".format(self.resize)
@@ -18,11 +18,11 @@ class Dir:
         model_name = "VGG_{}".format(task_name)
 
         # Directory which stores the model .prototxt file.
-        save_dir = "/home/sweekar/SDN_main/models/VGG/{}".format(task_name)
+        save_dir = "./models/VGG/{}".format(task_name)
         # Directory which stores the snapshot of models.
-        snapshot_dir = "/home/sweekar/SDN_main/models/VGG/{}".format(task_name)
+        snapshot_dir = "./models/VGG/{}".format(task_name)
         # Directory which stores the task script and log file.
-        task_dir = "/home/sweekar/SDN_main/tasks/VGG/{}".format(task_name)
+        task_dir = "./tasks/VGG/{}".format(task_name)
         # Directory which stores the detection results.
         output_result_dir = "{}/data/text/results/{}/Main".format(os.environ['HOME'], task_name)
 

@@ -1,7 +1,7 @@
 from __future__ import print_function
 import sys
 
-sys.path.insert(0, '/home/sweekar/SDN_main/caffe/python/')
+sys.path.insert(0, './caffe/python/')
 import caffe
 from caffe.model_libs import *
 from google.protobuf import text_format
@@ -40,8 +40,8 @@ else:
     # A learning rate for batch_size = 1, num_gpus = 1.
     base_lr = 0.000004
 
-pretrain_model = "/home/sweekar/SDN_main/services/SDN/Model/VGG_ILSVRC_16_layers_fc_reduced.caffemodel"
-label_map_file = "/home/sweekar/SDN_main/services/SDN/labelmap_voc.prototxt"
+pretrain_model = "./services/SDN/Model/VGG_ILSVRC_16_layers_fc_reduced.caffemodel"
+label_map_file = "./services/SDN/labelmap_voc.prototxt"
 
 # MultiBoxLoss parameters.
 num_classes = 2
@@ -282,7 +282,7 @@ if remove_old_models:
 # Task File
 with open(task_file, 'w') as f:
     f.write('cd {}\n'.format(caffe_root))
-    f.write('/home/sweekar/SDN_main/caffe/build/tools/caffe train \\\n')
+    f.write('./caffe/build/tools/caffe train \\\n')
     f.write('--solver="{}" \\\n'.format(solver_file))
     f.write(train_src_param)
     if solver_param['solver_mode'] == P.Solver.GPU:

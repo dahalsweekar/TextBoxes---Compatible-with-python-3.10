@@ -3,15 +3,16 @@ import math
 from PIL import Image
 import matplotlib.pyplot as plt
 
-test_file = '/home/sweekar/SDN_main/evaluation/test_list_ha.txt'
-img_dir = '/home/sweekar/SDN_main/dataset/test_dataset/'
-gt_dir = '/home/sweekar/SDN_main/evaluation/gt/'
-dt_dir = '/home/sweekar/SDN_main/evaluation/proposed/additional_iter_6200_ha/'
+test_file = './evaluation/test_list.txt'
+img_dir = './dataset/test_dataset/'
+gt_dir = './evaluation/gt/'
+dt_dir = './evaluation/dt/'
 
 print('Calculating Metrics:')
 
 
-def calculate_metrics(gt, dt, shift_rate):
+# Find the intersection and union of dt and gt
+def calculate_metrics(gt, dt, range_rate):
     hit_recall = 0
     hit_precision = 0
 
@@ -30,7 +31,7 @@ def calculate_metrics(gt, dt, shift_rate):
 
                 intersect_area = 0
                 union_area = 1
-                set_range = shift_rate
+                set_range = range_rate
 
                 if (int(polygon2_x[0]) - set_range <= int(polygon1_x[0]) and (int(polygon1_x[0]) <=
                                                                               int(polygon2_x[0]) + set_range)):
@@ -74,11 +75,11 @@ def calculate_metrics(gt, dt, shift_rate):
                                 intersect_area = csx * csy
                                 union_area = abs(diff_area + intersect_area)
                 if union_area == 0:
-                    ratio = 0
+                    IoU = 0
                 else:
-                    ratio = intersect_area / union_area
-                if ratio > threshold:
-                    flag[k] = math.ceil(ratio)
+                    IoU = intersect_area / union_area
+                if IoU > threshold:
+                    flag[k] = math.ceil(IoU)
     for item in flag:
         if item > 0:
             hit_recall = hit_recall + 1
@@ -86,28 +87,29 @@ def calculate_metrics(gt, dt, shift_rate):
     return hit_recall, hit_precision
 
 
-def calc_shift(threshold):
+# Calculating the range under which the detected texts are located for varied sized images
+def calc_range(ratio):
     x_mean, y_mean = (1000, 1000)
     image = Image.open(image_path)
     image_size = image.size
     x = image_size[0]
     y = image_size[1]
     total_pixels = x * y
-    shift = (1 - threshold) * 100
-    shift_rate = total_pixels / (x_mean * y_mean) * (shift * shift)
-    shift_rate = math.sqrt(shift_rate)
-    return shift_rate
+    approx_range = (1 - ratio) * 100
+    range_rate = total_pixels / (x_mean * y_mean) * (approx_range * approx_range)
+    range_rate = math.sqrt(range_rate)
+    return range_rate
 
 
 test_list = open(test_file, 'r')
 lines = test_list.readlines()
-
 images = []
 for line in lines:
     images.append(line.strip())
 test_list.close()
 
-threshold = 0.8
+threshold = 0.95
+
 nImg = len(images)
 print(f'Total Images: {nImg}')
 cum_hit_recall = 0
@@ -124,7 +126,7 @@ for i in images:
     gt_name = name + '.txt'
     dt_name = 'vgg_' + name + '.txt'
     image_path = os.path.join(img_dir, i)
-    shift_rate = calc_shift(threshold=threshold)
+    shift_rate = calc_range(ratio=0.75)
 
     # Adding groundtruths texts
     gt_path = os.path.join(gt_dir, gt_name)
@@ -150,10 +152,11 @@ for i in images:
     total_gt = total_gt + len(gt)
     total_dt = total_dt + len(dt)
 
+# Calculate Recall, Precision, F1-Score
 recall = cum_hit_recall / total_gt
 precision = cum_hit_precision / total_dt
 f_measure = (2 * recall * precision) / (recall + precision)
 print("Results:")
 print(f"Recall: {recall}")
 print(f"Precision: {precision}")
-print(f"F_score: {f_measure}")
+print(f"F1_score: {f_measure}")
