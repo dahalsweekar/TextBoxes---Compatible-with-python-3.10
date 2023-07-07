@@ -10,6 +10,22 @@ While scene text detection models have seen significant advancements in detectin
 
 ![arch](https://github.com/dahalsweekar/ocr_service/assets/99968233/5a953f2b-7b41-4caf-87fb-d0b65506eaaa)
 <sub>*figure 1: SDN architecture*</sub>
+```
+conv4_3 --> 38 x 38
+fc7 --> 19 x 19
+conv6_1 --> 17 x 17
+pool6 --> 16 x 16
+conv7_1 --> 14 x 14
+pool7 --> 13 x 13
+conv8_1 --> 11 x 11
+pool8 --> 10 x 10
+conv9_1 --> 8 x 8
+pool9 --> 7 x 7
+conv10_1 --> 5 x 5
+pool10 --> 4 x 4
+conv11_1 --> 2 x 2
+pool11 --> 1 x 1
+```
 
 The Script Detection Network adopts the VGG-16 architecture as its backbone. This backbone is responsible for identifying features, which are then fed into fully convolutional networks. The top layers of the network consist of 6 convolutional layers accompanied by their corresponding pooling layers. In total, the top layer comprises 12 layers, carefully designed to accommodate the varying sizes of text present in the scripts.
 
