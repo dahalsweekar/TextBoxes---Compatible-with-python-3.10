@@ -80,3 +80,43 @@ Approximately 0.26 seconds per image on GTX 960m GPU.
 ```
 1. run ./services/SDN/run.py
 ```
+## Changes
+```
+Changes are done in:
+
+1. Makefile.config
+2. Makefile
+3. src/caffe/util/io.cpp
+4. src/caffe/util/bbox_util.cpp
+5. src/caffe/util/im_transforms.cpp
+6. src/caffe/layers/window_data_layer.cpp
+7. src/caffe/layers/video_data_layer.cpp
+
+
+ INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial/ /usr/include/hdf5/serial/ /usr/include/hdf5/serial/ (Makefile.config)
+ LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib  /usr/lib/x86_64-linux-gnu/hdf5/serial (Makefile.config)
+
+ LIBRARIES += opencv_core opencv_highgui opencv_imgproc opencv_videoio (Makefile)
+
+ Annotate CPU_ONLY := 1 in Makefile.config (GPU requirement is mandatory)
+
+ PYTHON_LIBRARIES := boost_python38 python3.8
+ PYTHON_INCLUDE := /usr/include/python3.8 \
+                 /usr/lib/python3.8/dist-packages/numpy/core/include
+
+
+After compiling make.py using GPU successfully
+edit:
+    caffe/io.py ----> line 296 -----> as_grey to as_gray
+    demo_det.py ----> xrange to range
+    
+All these and other changes in .cpp and .py files which are necessary for OpenCV version > 4 users are done in this repository.Similarly, change for google colab users has been done as needed.
+
+CRNN portion of the repository is NOT implemented in this repository.
+
+Training and Testing dataset are collected from GoodNotes.
+Fine tuning is done in ICDAR dataset with addition 12 images from goodnotes. 
+
+Before training multiple errors are fixed in:
+python/caffe/model_lib.py
+```
