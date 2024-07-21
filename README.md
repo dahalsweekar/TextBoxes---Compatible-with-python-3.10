@@ -1,9 +1,9 @@
-# Script Detection Network (SDN)
+# TextBoxes: A Fast Text Detector with a Single Deep Neural Network 
 
-This code is inherited from TextBox Detection. The Caffe is made compatible with Python 3.10.
+This code is inherited from TextBox Detection @ https://github.com/MhLiao/TextBoxes. The Caffe is made compatible with Python 3.10.
 
 ## Abstract
-*This project introduces a trainable text detection model specifically designed for detecting Nepali handwritten scripts. The network is optimized for fast text detection on custom Nepali handwritten texts. It utilizes the VGG-16 architecture as its backbone and incorporates custom-designed top layers to handle the varying sizes of text found in camera-captured scripts.*
+This project introduces a trainable text detection model specifically designed for detecting Nepali handwritten scripts. The network is optimized for fast text detection on custom Nepali handwritten texts. It utilizes the VGG-16 architecture as its backbone and incorporates custom-designed top layers to handle the varying sizes of text found in camera-captured scripts.
 
 ## Introduction
 While scene text detection models have seen significant advancements in detecting texts on license plates, road signs, and product packages, there is a growing need for a model that can handle more complex, congested, and numerous instances of text found in scripts. Traditional scene text detection models typically deal with a limited number of texts within an image, where the main challenge is the complexity of the scene. However, our model is tailored to address different challenges specific to script detection.
