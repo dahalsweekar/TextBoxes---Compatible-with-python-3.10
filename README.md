@@ -82,7 +82,9 @@ Approximately 0.26 seconds per image on GTX 960m GPU.
 ```
 ## Changes
 ```
-Changes are done in:
+Please refer to the original source code for detailed information.
+
+Changes are made in:
 
 1. Makefile.config
 2. Makefile
