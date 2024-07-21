@@ -10,6 +10,8 @@ While scene text detection models have seen significant advancements in detectin
 
 ## Architecture
 
+These are additional layers added on top of backbone.
+
 ![arch](https://github.com/dahalsweekar/ocr_service/assets/99968233/5a953f2b-7b41-4caf-87fb-d0b65506eaaa)
 <sub>*figure 1: SDN architecture*</sub>
 ```
@@ -53,8 +55,8 @@ Approximately 0.26 seconds per image on GTX 960m GPU.
 
 ## Getting Started
 ```
-1. git clone https://github.com/dahalsweekar/Script-Detection-Network-SDN
-2. cd Script-Detection-Network-SDN/caffe
+1. git clone [https://github.com/dahalsweekar/Script-Detection-Network-SDN](https://github.com/dahalsweekar/TextBoxes---Compatible-with-python-3.10.git)
+2. cd TextBoxes---Compatible-with-python-3.10/caffe
 3. pip install -r requirements.txt
 4. make clean
 5. make -j8
